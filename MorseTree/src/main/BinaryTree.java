@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 
@@ -98,9 +100,9 @@ public class BinaryTree<E> {
     }
 
  
-     public java.util.ArrayList<TreeNode<E>> path(String codigos) {
+     public java.util.ArrayList<TreeNode<E>> path(String words) throws IOException {
         
-	
+    String codigos=encode(words,codesMorse());
     ArrayList<String> decode= new ArrayList<String>();
         for (char c : codigos.toCharArray()) {
             decode.add(String.valueOf(c));
@@ -134,28 +136,34 @@ public class BinaryTree<E> {
         return list; 
     }
     
-    public String encode(String word,HashMap<String,String> mapCodeMorse){
+    private String encode(String word,HashMap<String,String> mapCodeMorse){
         StringBuilder codeMorse= new StringBuilder();
-        LinkedList<String> listLetter = new LinkedList<>(Arrays.asList(word.toUpperCase()));
-        for(String letter:listLetter){
-            codeMorse.append(mapCodeMorse.get(word));
+        
+       
+        for (int i = 0; i < word.length(); i++) { 
+            codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i))));
             codeMorse.append(" ");
         }
         codeMorse.deleteCharAt(codeMorse.length()-1);
         return codeMorse.toString();
     }
-    public HashMap<String,String> codesMorse() throws FileNotFoundException, IOException{
+    private HashMap<String,String> codesMorse() {
         HashMap<String,String> mapCodeMorse= new HashMap<>();
         String cadena;
-        FileReader f = new FileReader("/src/resources/");
-        try (BufferedReader b = new BufferedReader(f)) {
+        FileReader f;
+        try {
+            f = new FileReader("alfabeto.txt");
+            BufferedReader b = new BufferedReader(f);
             while((cadena = b.readLine())!=null) {
                 StringBuilder key= new StringBuilder();
-                String[] parts = cadena.split("|");
+                String[] parts = cadena.split("\\|");
+                System.out.println(parts.toString());
                 for(int i=1;i<parts.length;i++) key.append(parts[i]);
                 mapCodeMorse.put( parts[0],key.toString());
                 key.delete(0,key.length());
             }
+        } catch (IOException ex) {
+            Logger.getLogger(BinaryTree.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mapCodeMorse;
     

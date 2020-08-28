@@ -1,8 +1,11 @@
 package main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -34,15 +37,20 @@ public class MorseAnimation extends Application {
 		pane.setBottom(hBox);
                 
                 btTraductor.setOnAction(e -> {
-			String key = tfKey.getText();
-                      
-			view.setPath(tree.path(key));
-			view.displayTree();
+                    try {
+                        String key = tfKey.getText();
+                        
+                        view.setPath(tree.path(key));
+                        view.displayTree();
+                    } catch (IOException ex) {
+                        Logger.getLogger(MorseAnimation.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 			                
 		});
                 
                 btClear.setOnAction(e -> {
 			tfKey.setText("");
+                        view.displayTree();
 			                
 		});
 
