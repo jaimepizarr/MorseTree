@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 
 public class BTView extends Pane {
     private BinaryTree<String> tree = new BinaryTree<>();
-    private double radius = 17; // Tree node radius
-    private double vGap = 50; //
+    private double radius = 17; 
+    private double vGap = 50; 
     private ArrayList<BinaryTree.TreeNode<String>> path;
 
 	BTView(BinaryTree<String> tree) {
@@ -45,20 +45,14 @@ public class BTView extends Pane {
     private void displayTree(BinaryTree.TreeNode<String> root,
                              double x, double y, double hGap, ArrayList<BinaryTree.TreeNode<String>> path) {
         if (root.left != null) {
-            // Draw a line to the left node
             getChildren().add(new Line(x - hGap, y + vGap, x, y));
-            // Draw the left subtree recursively
             displayTree(root.left, x - hGap, y + vGap, hGap / 2, path);
         }
 
         if (root.right != null) {
-            // Draw a line to the right node
             getChildren().add(new Line(x + hGap, y + vGap, x, y));
-            // Draw the right subtree recursively
             displayTree(root.right, x + hGap, y + vGap, hGap / 2, path);
         }
-
-        // Display a node
         Circle circle = new Circle(x, y, radius);
         circle.setFill(Color.WHITE);
         for(BinaryTree.TreeNode<String> i : path)

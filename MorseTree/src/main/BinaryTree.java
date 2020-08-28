@@ -1,12 +1,9 @@
 package main;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -111,10 +108,6 @@ public class BinaryTree<E> {
         TreeNode<E> current = root;
         list.add(current);
          for(String c:decode){
-                 try
-        {
-            Thread.sleep(100);
-        }catch(InterruptedException e){}
                  if(c.equals(".")){
                      current=current.right;
                      list.add(current);
