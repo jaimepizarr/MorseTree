@@ -1,20 +1,17 @@
 package main;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+
 
 
 public class BinaryTree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
 
-    /** Create a default binary tree */
+ 
     public BinaryTree() {
     }
 
-    /** Create a binary tree from an array of objects */
+
     public boolean add(E child, E parent, String position){
         TreeNode<E> nc = searchNode(child);
         if(nc!= null)
@@ -54,44 +51,9 @@ public class BinaryTree<E> {
     
     
 
-    /*
-    @Override /** Insert element o into the binary tree
-    
 
-    public boolean insert(E e) {
-        if (root == null)
-            root = createNewNode(e); // Create a new root
-            //root = new TreeNode<>(e);	// Question:  Why not do it this way?  It would work.
-        else {
-            // Locate the parent node
-            TreeNode<E> parent = null;
-            TreeNode<E> current = root;
-            while (current != null)
-                if (e.compareTo(current.element) < 0) {
-                    parent = current;
-                    current = current.left;
-                }
-                else if (e.compareTo(current.element) > 0) {
-                    parent = current;
-                    current = current.right;
-                }
-                else
-                    return false; // Duplicate node not inserted
-
-            // Create the new node and attach it to the parent node
-            if (e.compareTo(parent.element) < 0)
-                parent.left = createNewNode(e);
-                //parent.left = new TreeNode<>(e);
-            else
-                parent.right = createNewNode(e);
-        }
-
-        size++;
-        return true; // Element inserted successfully
-    }
-*/
         
-    protected TreeNode<E> createNewNode(E e) {  // Factory method design pattern
+    protected TreeNode<E> createNewNode(E e) {  
         return new TreeNode<>(e);
     }
 
@@ -109,8 +71,6 @@ public class BinaryTree<E> {
     }
 
 
-    /** This inner class is static, because it does not access
-     any instance members defined in its outer class */
     public static class TreeNode<E> {
         protected E data;
         protected TreeNode<E> left;
@@ -126,33 +86,47 @@ public class BinaryTree<E> {
         return size;
     }
 
-    /** Returns the root of the tree */
     public TreeNode<E> getRoot() {
         return root;
     }
 
-    /** Returns a path from the root leading to the specified element */
-     public java.util.ArrayList<TreeNode<E>> path(E e) {
-        java.util.ArrayList<TreeNode<E>> list =
-                new java.util.ArrayList<>();
-        TreeNode<E> current = root; // Start from the root
+ 
+     public java.util.ArrayList<TreeNode<E>> path(String codigos) {
+        
+	
+    ArrayList<String> decode= new ArrayList<String>();
+        for (char c : codigos.toCharArray()) {
+            decode.add(String.valueOf(c));
+            }
+         System.out.println(decode);
+        java.util.ArrayList<TreeNode<E>> list =new java.util.ArrayList<>();
+        TreeNode<E> current = root;
         list.add(current);
-/*
-        while (current != null) {
-            list.add(current); // Add the node to the list
-            if (e.compareTo(current.data) < 0) {
-                current = current.left;
-            }
-            else if (e.compareTo(current.data) > 0) {
-                current = current.right;
-            }
-            else
-                break;
-        }
-*/
-        return list; // Return an array list of nodes
+         for(String c:decode){
+                 try
+        {
+            Thread.sleep(100);
+        }catch(InterruptedException e){}
+                 if(c.equals(".")){
+                     current=current.right;
+                     list.add(current);
+                 }else if (c.equals("-")){
+                     current=current.left;
+                     list.add(current);
+                     
+                 }
+                 else{
+                     
+                     System.out.println(current.data);
+                     current=root;
+                 
+                 }
+
+         
+         }
+        return list; 
     }
     
- 
+
  
 }

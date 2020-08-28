@@ -1,5 +1,8 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +15,12 @@ import javafx.stage.Stage;
 
 
 public class MorseAnimation extends Application {
-	@Override // Override the start method in the Application class
+	@Override 
 	public void start(Stage primaryStage) {
-		BinaryTree<String> tree = new BinaryTree<>(); // Create a tree
+		BinaryTree<String> tree = new BinaryTree<>(); 
 
 		BorderPane pane = new BorderPane();
-		BTView view = new BTView(tree); // Create a View
+		BTView view = new BTView(tree); 
 		pane.setCenter(view);
 
 		TextField tfKey = new TextField();
@@ -32,9 +35,10 @@ public class MorseAnimation extends Application {
                 
                 btTraductor.setOnAction(e -> {
 			String key = tfKey.getText();
+                      
 			view.setPath(tree.path(key));
 			view.displayTree();
-			                 System.out.println("Prueba");
+			                
 		});
                 
 		
@@ -46,11 +50,7 @@ public class MorseAnimation extends Application {
 		primaryStage.setScene(scene); 
                primaryStage.setResizable(false);
 		primaryStage.show(); 
-                /*
-		for (int i = 0; i < 10; i++) {
-			tree.add((int) (Math.random() * 20));
-		}
-                */
+               
                 tree.add("&",null,"I");
                 tree.add("T","&","L");
                 tree.add("E","&","R");

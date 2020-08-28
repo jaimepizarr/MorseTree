@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class BTView extends Pane {
     private BinaryTree<String> tree = new BinaryTree<>();
     private double radius = 15; // Tree node radius
-    private double vGap = 50; // Gap between successive levels in the tree
+    private double vGap = 50; //
     private ArrayList<BinaryTree.TreeNode<String>> path;
 
 	BTView(BinaryTree<String> tree) {
@@ -33,7 +33,7 @@ public class BTView extends Pane {
 	}
     
     public void displayTree() {
-        this.getChildren().clear(); // Clear the pane
+        this.getChildren().clear(); 
         if (tree.getRoot() != null) {
             // Display tree recursively
             displayTree(tree.getRoot(), getWidth() / 2, vGap,
