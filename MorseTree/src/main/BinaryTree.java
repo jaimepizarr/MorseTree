@@ -107,7 +107,6 @@ public class BinaryTree<E> {
         for (char c : codigos.toCharArray()) {
             decode.add(String.valueOf(c));
             }
-         System.out.println(decode);
         java.util.ArrayList<TreeNode<E>> list =new java.util.ArrayList<>();
         TreeNode<E> current = root;
         list.add(current);
@@ -121,17 +120,13 @@ public class BinaryTree<E> {
                      list.add(current);
                  }else if (c.equals("-")){
                      current=current.left;
-                     list.add(current);
-                     
+                     list.add(current);      
                  }
                  else{
                      
                      System.out.println(current.data);
-                     current=root;
-                 
+                     current=root;  
                  }
-
-         
          }
         return list; 
     }
@@ -157,7 +152,6 @@ public class BinaryTree<E> {
             while((cadena = b.readLine())!=null) {
                 StringBuilder key= new StringBuilder();
                 String[] parts = cadena.split("\\|");
-                System.out.println(parts.toString());
                 for(int i=1;i<parts.length;i++) key.append(parts[i]);
                 mapCodeMorse.put( parts[0],key.toString());
                 key.delete(0,key.length());

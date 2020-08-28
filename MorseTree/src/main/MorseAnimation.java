@@ -39,13 +39,15 @@ public class MorseAnimation extends Application {
                 btTraductor.setOnAction(e -> {
                     try {
                         String key = tfKey.getText();
-                        
+                        if(!key.equals("")){
                         view.setPath(tree.path(key));
-                        view.displayTree();
+                        view.displayTree();}
+                        else{
+                            System.out.println("Is Empty");}
                     } catch (IOException ex) {
                         Logger.getLogger(MorseAnimation.class.getName()).log(Level.SEVERE, null, ex);
                     }
-			                
+			view.displayTree();                
 		});
                 
                 btClear.setOnAction(e -> {
@@ -64,7 +66,7 @@ public class MorseAnimation extends Application {
                 tree.add("T","&","L");
                 tree.add("E","&","R");
                 tree.add("M","T","L");
-                tree.add("M","T","R");
+                tree.add("N","T","R");
                 tree.add("A","E","L");
                 tree.add("I","E","R");
                 tree.add("O","M","L");
