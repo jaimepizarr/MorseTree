@@ -22,14 +22,14 @@ public class MorseAnimation extends Application {
 		BorderPane pane = new BorderPane();
 		BTView view = new BTView(tree); 
 		pane.setCenter(view);
-
 		TextField tfKey = new TextField();
-		tfKey.setPrefColumnCount(3);
+                
+		tfKey.setPrefColumnCount(10);
 		tfKey.setAlignment(Pos.BASELINE_RIGHT);
 		Button btTraductor = new Button("Traducir");
-
+                Button btClear = new Button("Clear");
 		HBox hBox = new HBox(5);
-		hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor);
+		hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor,btClear);
 		hBox.setAlignment(Pos.CENTER);
 		pane.setBottom(hBox);
                 
@@ -41,10 +41,11 @@ public class MorseAnimation extends Application {
 			                
 		});
                 
-		
+                btClear.setOnAction(e -> {
+			tfKey.setText("");
+			                
+		});
 
-		
-	
 		Scene scene = new Scene(pane, 1250, 450);
 		primaryStage.setTitle("Code Morse");
 		primaryStage.setScene(scene); 
@@ -83,6 +84,7 @@ public class MorseAnimation extends Application {
                 tree.add("V","S","L");
                 tree.add("H","S","R");
                 //NIVEL 3
+                /*
                 tree.add("0","-","L");
                 tree.add("9","-","R");
                 tree.add("8","Q","L");
@@ -90,9 +92,9 @@ public class MorseAnimation extends Application {
                 tree.add("6","B","R");
                 tree.add("1","J","L");
                 tree.add("2","_","L");
-                 tree.add("3","V","L");
+                tree.add("3","V","L");
                 tree.add("4","V","R");
-                tree.add("5","H","R");
+                tree.add("5","H","R");*/
 		view.displayTree();
 	}
 

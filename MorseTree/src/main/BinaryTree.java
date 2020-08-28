@@ -1,5 +1,12 @@
 package main;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 
 
@@ -127,6 +134,31 @@ public class BinaryTree<E> {
         return list; 
     }
     
+    public String encode(String word,HashMap<String,String> mapCodeMorse){
+        StringBuilder codeMorse= new StringBuilder();
+        LinkedList<String> listLetter = new LinkedList<>(Arrays.asList(word.toUpperCase()));
+        for(String letter:listLetter){
+            codeMorse.append(mapCodeMorse.get(word));
+            codeMorse.append(" ");
+        }
+        codeMorse.deleteCharAt(codeMorse.length()-1);
+        return codeMorse.toString();
+    }
+    public HashMap<String,String> codesMorse() throws FileNotFoundException, IOException{
+        HashMap<String,String> mapCodeMorse= new HashMap<>();
+        String cadena;
+        FileReader f = new FileReader("/src/resources/");
+        try (BufferedReader b = new BufferedReader(f)) {
+            while((cadena = b.readLine())!=null) {
+                StringBuilder key= new StringBuilder();
+                String[] parts = cadena.split("|");
+                for(int i=1;i<parts.length;i++) key.append(parts[i]);
+                mapCodeMorse.put( parts[0],key.toString());
+                key.delete(0,key.length());
+            }
+        }
+        return mapCodeMorse;
+    
+}
 
- 
 }

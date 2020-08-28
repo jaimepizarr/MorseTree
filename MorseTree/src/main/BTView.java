@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 
 public class BTView extends Pane {
     private BinaryTree<String> tree = new BinaryTree<>();
-    private double radius = 15; // Tree node radius
+    private double radius = 17; // Tree node radius
     private double vGap = 50; //
     private ArrayList<BinaryTree.TreeNode<String>> path;
 
@@ -67,5 +67,15 @@ public class BTView extends Pane {
         circle.setStroke(Color.BLACK);
         this.getChildren().addAll(circle,
                 new Text(x - 4, y + 4, root.data.toString()));
+    }
+    
+    public BinaryTree<String> createBinaryTreeReadFile(){
+        
+        
+        
+        
+        return null;
+    
+    
     }
 }
