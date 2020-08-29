@@ -79,6 +79,7 @@ public class BinaryTree<E> {
 
     public static class TreeNode<E> {
         protected E data;
+        protected String file;
         protected TreeNode<E> left;
         protected TreeNode<E> right;
 

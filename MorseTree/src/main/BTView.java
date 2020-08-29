@@ -27,6 +27,10 @@ public class BTView extends Pane {
     public void setPath(ArrayList<BinaryTree.TreeNode<String>> path) {
     	this.path = path;
     }
+    public void clearPath(){
+        this.path=new ArrayList<BinaryTree.TreeNode<String>>();
+    }
+
 
     public ArrayList<BinaryTree.TreeNode<String>> getPath() {
 		return path;
@@ -43,7 +47,7 @@ public class BTView extends Pane {
 
 
     private void displayTree(BinaryTree.TreeNode<String> root,
-                             double x, double y, double hGap, ArrayList<BinaryTree.TreeNode<String>> path) {
+                             double x, double y, double hGap, ArrayList<BinaryTree.TreeNode<String>> path ) {
         if (root.left != null) {
             getChildren().add(new Line(x - hGap, y + vGap, x, y));
             displayTree(root.left, x - hGap, y + vGap, hGap / 2, path);

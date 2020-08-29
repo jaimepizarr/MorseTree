@@ -49,7 +49,9 @@ public class MorseAnimation extends Application {
                 
                 btClear.setOnAction(e -> {
 			tfKey.setText("");
+                        view.clearPath();
                         view.displayTree();
+                        
 			                
 		});
 
@@ -59,9 +61,9 @@ public class MorseAnimation extends Application {
                primaryStage.setResizable(false);
 		primaryStage.show(); 
                
-                tree.add("&",null,"I");
-                tree.add("T","&","L");
-                tree.add("E","&","R");
+                tree.add("()",null,"I");
+                tree.add("T","()","L");
+                tree.add("E","()","R");
                 tree.add("M","T","L");
                 tree.add("N","T","R");
                 tree.add("A","E","L");
@@ -91,7 +93,7 @@ public class MorseAnimation extends Application {
                 tree.add("V","S","L");
                 tree.add("H","S","R");
                 //NIVEL 3
-                /*
+                
                 tree.add("0","-","L");
                 tree.add("9","-","R");
                 tree.add("8","Q","L");
@@ -101,7 +103,7 @@ public class MorseAnimation extends Application {
                 tree.add("2","_","L");
                 tree.add("3","V","L");
                 tree.add("4","V","R");
-                tree.add("5","H","R");*/
+                tree.add("5","H","R");
 		view.displayTree();
 	}
 
