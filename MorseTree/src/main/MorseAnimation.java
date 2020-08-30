@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class MorseAnimation extends Application {
@@ -23,17 +24,20 @@ public class MorseAnimation extends Application {
         BTView view = new BTView(tree);
         pane.setCenter(view);
         TextField tfKey = new TextField();
-
+        Text texto = new Text();
+        view.getChildren().add(texto);
         tfKey.setPrefColumnCount(10);
         tfKey.setAlignment(Pos.BASELINE_RIGHT);
         Button btTraductor = new Button("Traducir");
         Button btClear = new Button("Clear");
         HBox hBox = new HBox(5);
+   
         hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor, btClear);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
 
         btTraductor.setOnAction(e -> {
+            
             try {
                 String key = tfKey.getText();
                 if (!key.equals("")) {
@@ -49,6 +53,7 @@ public class MorseAnimation extends Application {
         });
 
         btClear.setOnAction(e -> {
+            
             tfKey.setText("");
             view.clearPath();
             view.displayTree();
