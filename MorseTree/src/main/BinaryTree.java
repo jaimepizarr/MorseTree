@@ -96,6 +96,44 @@ public class BinaryTree<E> {
     public TreeNode<E> getRoot() {
         return root;
     }
+    
+     public void crearArbol(E root) {
+        if (this.root == null) {
+            this.root = createNewNode(root);
+        }
+        HashMap<String, String> codigos = codesMorse();
+        codigos.entrySet().forEach((e) -> {
+            TreeNode nd = this.root;
+            int tam = e.getValue().length() - 1;
+            for (int n = 0; n <= tam; ++n) {
+                char c = e.getValue().charAt(n);
+                if (c == '.') {
+                    if (nd.right == null) {
+                        nd.right = new TreeNode<>(" ");
+                       
+                    }
+                     if (tam == n) {
+                            nd.right.data = e.getKey();
+                        }
+                    nd = nd.right;
+
+                }
+                if (c == '-') {
+                    if (nd.left == null) {
+                        nd.left = new TreeNode<>(" ");
+                        
+                    }
+                    if (tam == n) {
+                            nd.left.data = e.getKey();
+                        }
+                    nd = nd.left;
+
+                }
+
+            }
+        });
+
+    }
 
  
      public java.util.ArrayList<TreeNode<E>> path(String words) throws IOException {
