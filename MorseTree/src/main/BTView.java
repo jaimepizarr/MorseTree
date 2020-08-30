@@ -1,5 +1,4 @@
 package main;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javafx.scene.layout.Pane;
@@ -11,8 +10,8 @@ import javafx.scene.text.Text;
 
 public class BTView extends Pane {
     private BinaryTree<String> tree = new BinaryTree<>();
-    private double radius = 17; 
-    private double vGap = 50; 
+    private final double radius = 17; 
+    private final double vGap = 50; 
     private LinkedList<BinaryTree.TreeNode<String>> path;
 
     BTView(BinaryTree<String> tree) {

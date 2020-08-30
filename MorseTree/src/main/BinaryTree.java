@@ -118,6 +118,7 @@ public class BinaryTree<E> {
         codeMorse.deleteCharAt(codeMorse.length()-1);
         return codeMorse.toString();
     }
+    
     private HashMap<String,String> codesMorse() {
         HashMap<String,String> mapCodeMorse= new HashMap<>();
         String cadena;
