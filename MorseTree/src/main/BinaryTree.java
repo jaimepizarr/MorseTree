@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,24 +62,20 @@ public class BinaryTree<E> {
                 if (c == '.') {
                     if (nd.right == null) {
                         nd.right = new TreeNode<>(" ");
-                       
                     }
-                     if (tam == n) {
+                    if (tam == n) {
                             nd.right.data = e.getKey();
-                        }
+                    }
                     nd = nd.right;
-
                 }
                 if (c == '-') {
                     if (nd.left == null) {
                         nd.left = new TreeNode<>(" ");
-                        
                     }
                     if (tam == n) {
                             nd.left.data = e.getKey();
                         }
                     nd = nd.left;
-
                 }
 
             }
@@ -87,37 +84,33 @@ public class BinaryTree<E> {
     }
 
  
-     public java.util.ArrayList<TreeNode<E>> path(String words) throws IOException {
-        
-    String codigos=encode(words,codesMorse());
-    ArrayList<String> decode= new ArrayList<String>();
+    public LinkedList<TreeNode<E>> path(String words) throws IOException {
+        String codigos=encode(words,codesMorse());
+        LinkedList<String> decode= new LinkedList<>();
         for (char c : codigos.toCharArray()) {
             decode.add(String.valueOf(c));
-            }
-        java.util.ArrayList<TreeNode<E>> list =new java.util.ArrayList<>();
+        }
+        LinkedList<TreeNode<E>> list =new LinkedList<>();
         TreeNode<E> current = root;
         list.add(current);
-         for(String c:decode){
-                 if(c.equals(".")){
-                     current=current.right;
-                     list.add(current);
-                 }else if (c.equals("-")){
-                     current=current.left;
-                     list.add(current);      
-                 }
-                 else{
-                     
-                     System.out.println(current.data);
-                     current=root;  
-                 }
-         }
+        for(String c:decode){
+            if(c.equals(".")){
+                current=current.right;
+                list.add(current);
+            }else if (c.equals("-")){
+                current=current.left;
+                list.add(current);      
+            }
+            else{
+                System.out.println(current.data);
+                current=root;  
+            }
+        }
         return list; 
     }
-    
+      
     private String encode(String word,HashMap<String,String> mapCodeMorse){
         StringBuilder codeMorse= new StringBuilder();
-        
-       
         for (int i = 0; i < word.length(); i++) { 
             codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
             codeMorse.append(" ");
@@ -143,7 +136,6 @@ public class BinaryTree<E> {
             Logger.getLogger(BinaryTree.class.getName()).log(Level.SEVERE, null, ex);
         }
         return mapCodeMorse;
-    
-}
+    }
 
 }

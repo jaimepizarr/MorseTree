@@ -1,5 +1,6 @@
 package main;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -12,11 +13,11 @@ public class BTView extends Pane {
     private BinaryTree<String> tree = new BinaryTree<>();
     private double radius = 17; 
     private double vGap = 50; 
-    private ArrayList<BinaryTree.TreeNode<String>> path;
+    private LinkedList<BinaryTree.TreeNode<String>> path;
 
-	BTView(BinaryTree<String> tree) {
+    BTView(BinaryTree<String> tree) {
         this.tree = tree;
-        path = new ArrayList<BinaryTree.TreeNode<String> >();
+        path = new LinkedList<>();
         setStatus("Tree is empty");
     }
 
@@ -24,17 +25,17 @@ public class BTView extends Pane {
         this.getChildren().add(new Text(20, 20, msg));
     }
     
-    public void setPath(ArrayList<BinaryTree.TreeNode<String>> path) {
+    public void setPath(LinkedList<BinaryTree.TreeNode<String>> path) {
     	this.path = path;
     }
     public void clearPath(){
-        this.path=new ArrayList<BinaryTree.TreeNode<String>>();
+        this.path=new LinkedList<>();
     }
 
 
-    public ArrayList<BinaryTree.TreeNode<String>> getPath() {
-		return path;
-	}
+    public LinkedList<BinaryTree.TreeNode<String>> getPath() {
+        return path;
+    }
     
     public void displayTree() {
         this.getChildren().clear(); 
@@ -47,7 +48,7 @@ public class BTView extends Pane {
 
 
     private void displayTree(BinaryTree.TreeNode<String> root,
-                             double x, double y, double hGap, ArrayList<BinaryTree.TreeNode<String>> path ) {
+                             double x, double y, double hGap, LinkedList<BinaryTree.TreeNode<String>> path ) {
         if (root.left != null) {
             getChildren().add(new Line(x - hGap, y + vGap, x, y));
             displayTree(root.left, x - hGap, y + vGap, hGap / 2, path);
