@@ -12,60 +12,11 @@ import java.util.logging.Logger;
 public class BinaryTree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
-
- 
-    public BinaryTree() {
-    }
-
-
-    public boolean add(E child, E parent, String position){
-        TreeNode<E> nc = searchNode(child);
-        if(nc!= null)
-            return false;
-        nc= new TreeNode<>(child);
-        if(parent == null && root == null&&position.equals("I")){
-            root = nc;
-            return true;
-        }
-        TreeNode<E> np = searchNode(parent);
-        if(np!=null){
-            if(np.left==null&& position.equals("L") ){
-                np.left=nc;
-                return true;
-            }
-            else if(np.right==null&& position.equals("R")){
-                np.right=nc;
-                return true;
-            }
-        }
-        return false;
-    }
-    private TreeNode<E> searchNode(E data){
-        return searchNode(data,root);
-    }
     
-       private TreeNode<E> searchNode(E data, TreeNode<E> n){
-        if(n==null) return n;
-        else if (n.data.equals(data)) return n;
-        else{
-            TreeNode<E> nl = searchNode(data,n.left);
-            if(nl!=null) return nl;
-            return searchNode(data,n.right);
-            
-        }
-    }
-    
-    
-
-
-        
     protected TreeNode<E> createNewNode(E e) {  
         return new TreeNode<>(e);
     }
 
- 
-    
-    
     public int height() {
     	return height(root);
     }
@@ -168,7 +119,7 @@ public class BinaryTree<E> {
         
        
         for (int i = 0; i < word.length(); i++) { 
-            codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i))));
+            codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
             codeMorse.append(" ");
         }
         codeMorse.deleteCharAt(codeMorse.length()-1);

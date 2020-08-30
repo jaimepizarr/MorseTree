@@ -66,14 +66,4 @@ public class BTView extends Pane {
         this.getChildren().addAll(circle,
                 new Text(x - 4, y + 4, root.data.toString()));
     }
-    
-    public BinaryTree<String> createBinaryTreeReadFile(){
-        
-        
-        
-        
-        return null;
-    
-    
-    }
 }
