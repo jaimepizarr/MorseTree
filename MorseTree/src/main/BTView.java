@@ -105,63 +105,68 @@ public class BTView extends Pane {
         circle.setStroke(Color.BLACK);
 
         this.getChildren().addAll(circle,
-                new Text(x - 4, y + 4, root.data.toString()));
+                new Text(x - 4, y + 4, root.data));
     }
 
     public void mostrarPath(String code) {
+        int size = getChildren().size();
         Thread thread = new Thread(() -> {
-            
+
             double x = getWidth() / 2;
             double y = vGap;
             double hGap = getWidth() / 4;
-            Platform.runLater(new T1(x, y));
+            Platform.runLater(new CircleThread(x, y));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
             }
             for (char c : code.toCharArray()) {
-                
-                try {
-                    switch (c) {
-                        case '.':
-                            x += hGap;
-                            y += vGap;
-                            Platform.runLater(new T1(x, y));
-                            hGap /= 2;
-                            break;
-                        case '-':
-                            x -= hGap;
-                            y += vGap;
-                            Platform.runLater(new T1(x, y));
-                            hGap /= 2;
-                            break;
-                        default:
-                            x = getWidth() / 2;
-                            y = vGap;
-                            hGap = getWidth() / 4;
-                            Thread.sleep(1000); 
-                            break;
-                    }
 
+                try {
+
+                    if (c == '.') {
+                        x += hGap;
+                        y += vGap;
+                        hGap /= 2;
+                    } else if (c == '-') {
+                        x -= hGap;
+                        y += vGap;
+                        hGap /= 2;
+                    } else if (c == ' ') {
+                        x = getWidth() / 2;
+                        y = vGap;
+                        hGap = getWidth() / 4;
+                        Thread.sleep(1000);
+                        Platform.runLater(() -> {
+                            getChildren().remove(size, getChildren().size());
+                        });
+                    } else {
+                        System.out.println(c);
+                        Platform.runLater(new TextThread(x,y,c));
+                    }
+                    Platform.runLater(new CircleThread(x, y));
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             }
+            Platform.runLater(() -> {
+                getChildren().remove(size, getChildren().size());
+            });
         });
 
         thread.start();
 
     }
 
-    private class T1 implements Runnable {
+    private class CircleThread implements Runnable {
 
         private double x;
         private double y;
 
-        public T1(double x, double y) {
+        public CircleThread(double x, double y) {
             this.x = x;
             this.y = y;
         }
@@ -172,6 +177,26 @@ public class BTView extends Pane {
             circle2.setFill(Color.ORANGE);
             circle2.setStroke(Color.BLACK);
             getChildren().add(circle2);
+
+        }
+
+    }
+
+    private class TextThread implements Runnable {
+
+        private double x;
+        private double y;
+        private char c;
+
+        public TextThread(double x, double y, char c) {
+            this.x = x - 4;
+            this.y = y - 4;
+            this.c = c;
+        }
+
+        @Override
+        public void run() {
+            getChildren().add(new Text(x - 4, y + 4, String.valueOf(c)));
 
         }
 
