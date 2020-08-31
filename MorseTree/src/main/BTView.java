@@ -84,7 +84,7 @@ public class BTView extends Pane {
             double x = getWidth() / 2;
             double y = vGap;
             double hGap = getWidth() / 4;
-            Platform.runLater(new CircleThread(x, y,null));
+            Platform.runLater(new CircleThread(x, y));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
@@ -98,12 +98,12 @@ public class BTView extends Pane {
                         x += hGap;
                         y += vGap;
                         hGap /= 2;
-                        musicFile = "point.mp3";
+                        musicFile = "/resources/Punto.mpeg";
                     } else if (c == '-') {
                         x -= hGap;
                         y += vGap;
                         hGap /= 2;
-                        musicFile = "line.mp3";
+                        musicFile = "/resources/Raya.mpeg";
 
                     } else {
                         Platform.runLater(new TextThread(x, y, c));
@@ -116,7 +116,11 @@ public class BTView extends Pane {
                             getChildren().remove(size, getChildren().size());
                         });
                     }
-                    Platform.runLater(new CircleThread(x, y,musicFile));
+                    
+                    Platform.runLater(new CircleThread(x, y));
+                    if(musicFile != null) {
+                       playMusic(musicFile);
+                    }
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,17 +135,25 @@ public class BTView extends Pane {
         thread.start();
 
     }
+    private void playMusic(String musicFile){
+        if(musicFile!=null){
+            Media sound = new Media(this.getClass().getResource(musicFile).toExternalForm());
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.setAutoPlay(true);
+            mediaPlayer.setVolume(1);
+            System.out.println("Suena");
+            
+        }
+    }
 
     private class CircleThread implements Runnable {
 
         private double x;
         private double y;
-        private String musicFile;
 
-        public CircleThread(double x, double y,String musicFile) {
+        public CircleThread(double x, double y) {
             this.x = x;
             this.y = y;
-            this.musicFile = musicFile;
         }
 
         @Override
@@ -150,17 +162,11 @@ public class BTView extends Pane {
             circle2.setFill(Color.ORANGE);
             circle2.setStroke(Color.BLACK);
             getChildren().add(circle2);
-            if(musicFile != null) {
-                playMusic();
-            }
+            
 
         }
         
-        private void playMusic(){
-            Media sound = new Media(new File(musicFile).toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(sound);
-            mediaPlayer.setAutoPlay(true);
-        }
+        
 
     }
 
