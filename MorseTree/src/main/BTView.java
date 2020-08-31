@@ -1,10 +1,17 @@
 package main;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
+import javafx.scene.Node;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 
 
@@ -39,31 +46,107 @@ public class BTView extends Pane {
     public void displayTree() {
         this.getChildren().clear(); 
         if (tree.getRoot() != null) {
-            // Display tree recursively
+            
             displayTree(tree.getRoot(), getWidth() / 2, vGap,
                     getWidth() / 4, this.path);
         }
     }
 
-
     private void displayTree(BinaryTree.TreeNode<String> root,
                              double x, double y, double hGap, LinkedList<BinaryTree.TreeNode<String>> path ) {
+        
+        Circle circle = new Circle(x, y, radius);
+        
+        circle.setFill(Color.WHITE);
+//        for(BinaryTree.TreeNode<String> i : path) {
+//            if(root.equals(i)){
+//                System.out.println(circle.getFill());
+//                circle.setFill(Color.ORANGE);
+//                System.out.println(i.data);
+//            }
+//        }
+//        Thread thread = new Thread(new Runnable(){
+//            
+//            @Override
+//            public void run() {
+//                for(BinaryTree.TreeNode<String> i : path){
+//                    
+//                    try {
+//                        if(root.equals(i)){
+//                            circle.setFill(Color.ORANGE);
+//                            System.out.println(i.data);
+//                            Thread.sleep(500);
+//                        }else{
+//                            Thread.sleep(1000);
+//                        }
+//                    }catch (InterruptedException ex) {
+//                        Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            }
+//            
+//            
+//        });
+//        thread.start();
+        
         if (root.left != null) {
             getChildren().add(new Line(x - hGap, y + vGap, x, y));
             displayTree(root.left, x - hGap, y + vGap, hGap / 2, path);
+            
         }
 
         if (root.right != null) {
             getChildren().add(new Line(x + hGap, y + vGap, x, y));
             displayTree(root.right, x + hGap, y + vGap, hGap / 2, path);
         }
-        Circle circle = new Circle(x, y, radius);
-        circle.setFill(Color.WHITE);
-        for(BinaryTree.TreeNode<String> i : path)
-        	if(root.equals(i))
-        		circle.setFill(Color.ORANGE);
         circle.setStroke(Color.BLACK);
+        
         this.getChildren().addAll(circle,
                 new Text(x - 4, y + 4, root.data.toString()));
     }
+    
+    
+    public void mostrarPath(String code){
+        double x = getWidth() / 2;
+        double y = vGap;
+        double hGap = getWidth() / 4;
+        Circle circle = new Circle(x, y, radius);
+        circle.setFill(Color.ORANGE);
+        circle.setStroke(Color.BLACK);
+
+        getChildren().add(circle);
+        
+        for(char c: code.toCharArray()){
+            if(c==('.')){
+
+                x+=hGap;
+                y+=vGap;
+                circle = new Circle(x,y,radius);
+                circle.setFill(Color.ORANGE);
+                circle.setStroke(Color.BLACK);
+
+                getChildren().add(circle);
+                hGap /=2;
+            }else if (c==('-')){
+                
+                x-=hGap;
+                y+=vGap;
+                circle = new Circle(x,y,radius);
+                circle.setFill(Color.ORANGE);
+                circle.setStroke(Color.BLACK);
+
+                getChildren().add(circle);
+                hGap /=2;
+            }else{
+                x = getWidth() / 2;
+                y = vGap;
+                hGap = getWidth() / 4;
+            }
+            
+
+        }
+
+    }
+    
+    
 }

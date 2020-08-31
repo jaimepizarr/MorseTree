@@ -38,6 +38,9 @@ public class BinaryTree<E> {
         public TreeNode(E e) {
             data = e;
         }
+        public TreeNode(){
+            
+        }
     }
 
  
@@ -86,30 +89,28 @@ public class BinaryTree<E> {
  
     public LinkedList<TreeNode<E>> path(String words) throws IOException {
         String codigos=encode(words,codesMorse());
-        LinkedList<String> decode= new LinkedList<>();
-        for (char c : codigos.toCharArray()) {
-            decode.add(String.valueOf(c));
-        }
+        String[] decode = codigos.split(" ");
         LinkedList<TreeNode<E>> list =new LinkedList<>();
         TreeNode<E> current = root;
+        
         list.add(current);
-        for(String c:decode){
-            if(c.equals(".")){
+        for(char c:codigos.toCharArray()){
+            if(c==('.')){
                 current=current.right;
                 list.add(current);
-            }else if (c.equals("-")){
+            }else if (c==('-')){
                 current=current.left;
                 list.add(current);      
-            }
-            else{
-                System.out.println(current.data);
-                current=root;  
+            }else{
+                current=root;
+                
             }
         }
+        
         return list; 
     }
       
-    private String encode(String word,HashMap<String,String> mapCodeMorse){
+    public String encode(String word,HashMap<String,String> mapCodeMorse){
         StringBuilder codeMorse= new StringBuilder();
         for (int i = 0; i < word.length(); i++) { 
             codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
@@ -119,7 +120,7 @@ public class BinaryTree<E> {
         return codeMorse.toString();
     }
     
-    private HashMap<String,String> codesMorse() {
+    public HashMap<String,String> codesMorse() {
         HashMap<String,String> mapCodeMorse= new HashMap<>();
         String cadena;
         FileReader f;

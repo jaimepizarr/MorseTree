@@ -35,30 +35,26 @@ public class MorseAnimation extends Application {
         hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor, btClear);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
-
+        
         btTraductor.setOnAction(e -> {
             
-            try {
+            
                 String key = tfKey.getText();
                 if (!key.equals("")) {
-                    view.setPath(tree.path(key));
-                    view.displayTree();
+                    view.mostrarPath(tree.encode(key,tree.codesMorse()));
                 } else {
                     System.out.println("Is Empty");
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(MorseAnimation.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            view.displayTree();
-        });
-
-        btClear.setOnAction(e -> {
             
-            tfKey.setText("");
-            view.clearPath();
-            view.displayTree();
-
         });
+
+//        btClear.setOnAction(e -> {
+//            
+//            tfKey.setText("");
+//            view.clearPath();
+//            view.displayTree();
+//
+//        });
 
         Scene scene = new Scene(pane, 1250, 450);
         primaryStage.setTitle("Code Morse");
