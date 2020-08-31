@@ -1,8 +1,5 @@
 package main;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
