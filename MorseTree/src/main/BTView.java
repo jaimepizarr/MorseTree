@@ -1,7 +1,7 @@
 package main;
 
 
-import java.io.File;
+
 import java.util.LinkedList;
 
 import java.util.logging.Level;
@@ -20,8 +20,8 @@ import javafx.scene.text.Text;
 public class BTView extends Pane {
 
     private BinaryTree<String> tree = new BinaryTree<>();
-    private final double radius = 17;
-    private final double vGap = 50;
+    private static final double radius = 17;
+    private  static final double vGap = 50;
     private LinkedList<BinaryTree.TreeNode<String>> path;
 
     BTView(BinaryTree<String> tree) {
@@ -89,6 +89,7 @@ public class BTView extends Pane {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
+                 Thread.currentThread().interrupt();
             }
             for (char c : code.toCharArray()) {
                 String musicFile = null;
@@ -107,7 +108,6 @@ public class BTView extends Pane {
 
                     } else {
                         Platform.runLater(new TextThread(x, y, c));
-                        System.out.println(c);
                         x = getWidth() / 2;
                         y = vGap;
                         hGap = getWidth() / 4;
@@ -124,6 +124,7 @@ public class BTView extends Pane {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
+                     Thread.currentThread().interrupt();
                 }
 
             }
@@ -141,7 +142,6 @@ public class BTView extends Pane {
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(1);
-            System.out.println("Suena");
             
         }
     }

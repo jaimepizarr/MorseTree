@@ -2,7 +2,6 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -53,46 +52,32 @@ public class BinaryTree<E> {
     }
     
      public void crearArbol(E root) {
-        if (this.root == null) {
-            this.root = createNewNode(root);
-        }
+        if (this.root == null)this.root = createNewNode(root);
         HashMap<String, String> codigos = codesMorse();
-        codigos.entrySet().forEach((e) -> {
+        codigos.entrySet().forEach(e -> {
             TreeNode nd = this.root;
             int tam = e.getValue().length() - 1;
             for (int n = 0; n <= tam; ++n) {
                 char c = e.getValue().charAt(n);
                 if (c == '.') {
-                    if (nd.right == null) {
-                        nd.right = new TreeNode<>(" ");
-                    }
-                    if (tam == n) {
-                            nd.right.data = e.getKey();
-                    }
+                    if (nd.right == null) nd.right = new TreeNode<>(" ");
+                    if (tam == n)   nd.right.data = e.getKey(); 
                     nd = nd.right;
                 }
                 if (c == '-') {
-                    if (nd.left == null) {
-                        nd.left = new TreeNode<>(" ");
-                    }
-                    if (tam == n) {
-                            nd.left.data = e.getKey();
-                        }
+                    if (nd.left == null)nd.left = new TreeNode<>(" ");
+                    if (tam == n) nd.left.data = e.getKey();
                     nd = nd.left;
                 }
-
             }
         });
-
     }
 
  
-    public LinkedList<TreeNode<E>> path(String words) throws IOException {
+    public LinkedList<TreeNode<E>> path(String words){
         String codigos=encode(words,codesMorse());
-        String[] decode = codigos.split(" ");
         LinkedList<TreeNode<E>> list =new LinkedList<>();
         TreeNode<E> current = root;
-        
         list.add(current);
         for(char c:codigos.toCharArray()){
             if(c==('.')){
@@ -116,17 +101,13 @@ public class BinaryTree<E> {
             codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
             codeMorse.append(String.valueOf(word.charAt(i)).toUpperCase());
         }
-        System.out.println(codeMorse);
         return codeMorse.toString();
     }
     
     public HashMap<String,String> codesMorse() {
         HashMap<String,String> mapCodeMorse= new HashMap<>();
         String cadena;
-        FileReader f;
-        try {
-            f = new FileReader("alfabeto.txt");
-            BufferedReader b = new BufferedReader(f);
+        try (BufferedReader b = new BufferedReader(new FileReader("alfabeto.txt"))){
             while((cadena = b.readLine())!=null) {
                 StringBuilder key= new StringBuilder();
                 String[] parts = cadena.split("\\|");
