@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,7 +54,11 @@ public class BinaryTree<E> {
     
      public void crearArbol(E root) {
         if (this.root == null)this.root = createNewNode(root);
-        HashMap<String, String> codigos = codesMorse();
+        recorrido();
+    }
+
+     private void recorrido(){
+       HashMap<String, String> codigos = codesMorse();
         codigos.entrySet().forEach(e -> {
             TreeNode nd = this.root;
             int tam = e.getValue().length() - 1;
@@ -71,12 +76,12 @@ public class BinaryTree<E> {
                 }
             }
         });
-    }
-
+     
+     }
  
-    public LinkedList<TreeNode<E>> path(String words){
+    public List<TreeNode<E>> path(String words){
         String codigos=encode(words,codesMorse());
-        LinkedList<TreeNode<E>> list =new LinkedList<>();
+        List<TreeNode<E>> list =new LinkedList<>();
         TreeNode<E> current = root;
         list.add(current);
         for(char c:codigos.toCharArray()){
@@ -91,7 +96,6 @@ public class BinaryTree<E> {
                 
             }
         }
-        
         return list; 
     }
       

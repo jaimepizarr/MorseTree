@@ -3,6 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,7 +17,6 @@ public class MorseAnimation extends Application {
     @Override
     public void start(Stage primaryStage) {
         BinaryTree<String> tree = new BinaryTree<>();
-
         BorderPane pane = new BorderPane();
         BTView view = new BTView(tree);
         pane.setCenter(view);
@@ -28,31 +28,23 @@ public class MorseAnimation extends Application {
         Button btTraductor = new Button("Traducir");
         Button btClear = new Button("Clear");
         HBox hBox = new HBox(5);
-   
         hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor, btClear);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
-        
+
         btTraductor.setOnAction(e -> {
-            
-            
-                String key = tfKey.getText();
-                if (!key.equals("")) {
-                    view.mostrarPath(tree.encode(key,tree.codesMorse()));
-                } else {
-                    System.out.println("Is Empty");
-                }
-            
+            String key = tfKey.getText();
+            if (!key.equals("")) {
+                view.mostrarPath(tree.encode(key, tree.codesMorse()));
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText(null);
+                alert.setTitle("Info");
+                alert.setContentText("Is Empty");
+                alert.showAndWait();
+            }
+
         });
-
-//        btClear.setOnAction(e -> {
-//            
-//            tfKey.setText("");
-//            view.clearPath();
-//            view.displayTree();
-//
-//        });
-
         Scene scene = new Scene(pane, 1250, 450);
         primaryStage.setTitle("Code Morse");
         primaryStage.setScene(scene);
@@ -60,9 +52,7 @@ public class MorseAnimation extends Application {
         primaryStage.show();
         tree.crearArbol("&");
         view.displayTree();
-
     }
-
     public static void main(String[] args) {
         launch(args);
     }

@@ -20,8 +20,8 @@ import javafx.scene.text.Text;
 public class BTView extends Pane {
 
     private BinaryTree<String> tree = new BinaryTree<>();
-    private static final double radius = 17;
-    private  static final double vGap = 50;
+    private static final double RADIUS = 17;
+    private  static final double VGAP = 50;
     private LinkedList<BinaryTree.TreeNode<String>> path;
 
     BTView(BinaryTree<String> tree) {
@@ -29,7 +29,15 @@ public class BTView extends Pane {
         path = new LinkedList<>();
         setStatus("Tree is empty");
     }
-
+    
+    public enum radius{
+    RADIUS; 
+   
+    }
+    public enum vGap{
+    VGAP; 
+    }
+    
     public void setStatus(String msg) {
         this.getChildren().add(new Text(20, 20, msg));
     }
@@ -49,26 +57,26 @@ public class BTView extends Pane {
     public void displayTree() {
         this.getChildren().clear();
         if (tree.getRoot() != null) {
-            displayTree(tree.getRoot(), getWidth() / 2, vGap,getWidth()/4);
+            displayTree(tree.getRoot(), getWidth() / 2, VGAP,getWidth()/4);
         }
     }
 
     private void displayTree(BinaryTree.TreeNode<String> root,
             double x, double y, double hGap) {
 
-        Circle circle = new Circle(x, y, radius);
+        Circle circle = new Circle(x, y, RADIUS);
 
         circle.setFill(Color.WHITE);
 
         if (root.left != null) {
-            getChildren().add(new Line(x - hGap, y + vGap, x, y));
-            displayTree(root.left, x - hGap, y + vGap, hGap / 2);
+            getChildren().add(new Line(x - hGap, y + VGAP, x, y));
+            displayTree(root.left, x - hGap, y + VGAP, hGap / 2);
 
         }
 
         if (root.right != null) {
-            getChildren().add(new Line(x + hGap, y + vGap, x, y));
-            displayTree(root.right, x + hGap, y + vGap, hGap / 2);
+            getChildren().add(new Line(x + hGap, y + VGAP, x, y));
+            displayTree(root.right, x + hGap, y + VGAP, hGap / 2);
         }
         circle.setStroke(Color.BLACK);
 
@@ -79,58 +87,56 @@ public class BTView extends Pane {
 
     public void mostrarPath(String code) {
         int size = getChildren().size();
-        Thread thread = new Thread(() -> {
-
+        Thread thread;
+        thread = new Thread(() -> {
             double x = getWidth() / 2;
-            double y = vGap;
+            double y = VGAP;
             double hGap = getWidth() / 4;
             Platform.runLater(new CircleThread(x, y));
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
-                 Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt();
             }
             for (char c : code.toCharArray()) {
                 String musicFile = null;
                 try {
-
-                    if (c == '.') {
-                        x += hGap;
-                        y += vGap;
-                        hGap /= 2;
-                        musicFile = "/resources/Punto.mpeg";
-                    } else if (c == '-') {
-                        x -= hGap;
-                        y += vGap;
-                        hGap /= 2;
-                        musicFile = "/resources/Raya.mpeg";
-
-                    } else {
-                        Platform.runLater(new TextThread(x, y, c));
-                        x = getWidth() / 2;
-                        y = vGap;
-                        hGap = getWidth() / 4;
-                        Thread.sleep(1000);
-                        Platform.runLater(() -> {
-                            getChildren().remove(size, getChildren().size());
-                        });
+                    switch (c) {
+                        case '.':
+                            x += hGap;
+                            y += VGAP;
+                            hGap /= 2;
+                            musicFile = "/resources/Punto.mpeg";
+                            break;
+                        case '-':
+                            x -= hGap;
+                            y += VGAP;
+                            hGap /= 2;
+                            musicFile = "/resources/Raya.mpeg";
+                            break;
+                        default:
+                            Platform.runLater(new TextThread(x, y, c));
+                            x = getWidth() / 2;
+                            y = VGAP;
+                            hGap = getWidth() / 4;
+                            Thread.sleep(1000);
+                            Platform.runLater(()->getChildren().remove(size, getChildren().size()));
+                            break;
                     }
                     
                     Platform.runLater(new CircleThread(x, y));
                     if(musicFile != null) {
-                       playMusic(musicFile);
+                        playMusic(musicFile);
                     }
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
-                     Thread.currentThread().interrupt();
+                    Thread.currentThread().interrupt();
                 }
 
             }
-            Platform.runLater(() -> {
-                getChildren().remove(size, getChildren().size());
-            });
+            Platform.runLater(()->getChildren().remove(size, getChildren().size()));
         });
 
         thread.start();
@@ -158,7 +164,7 @@ public class BTView extends Pane {
 
         @Override
         public void run() {
-            Circle circle2 = new Circle(x, y, radius);
+            Circle circle2 = new Circle(x, y, RADIUS);
             circle2.setFill(Color.ORANGE);
             circle2.setStroke(Color.BLACK);
             getChildren().add(circle2);
