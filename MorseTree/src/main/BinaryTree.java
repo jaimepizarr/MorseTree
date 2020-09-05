@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class BinaryTree<E> {
     protected TreeNode<E> root;
     protected int size = 0;
+    private HashMap<String,String> mapCodeMorse = new HashMap<>();
     
     protected TreeNode<E> createNewNode(E e) {  
         return new TreeNode<>(e);
@@ -58,8 +59,7 @@ public class BinaryTree<E> {
     }
 
      private void recorrido(){
-       HashMap<String, String> codigos = codesMorse();
-        codigos.entrySet().forEach(e -> {
+        this.mapCodeMorse.entrySet().forEach(e -> {
             TreeNode nd = this.root;
             int tam = e.getValue().length() - 1;
             for (int n = 0; n <= tam; ++n) {
@@ -80,7 +80,7 @@ public class BinaryTree<E> {
      }
  
     public List<TreeNode<E>> path(String words){
-        String codigos=encode(words,codesMorse());
+        String codigos=encode(words);
         List<TreeNode<E>> list =new LinkedList<>();
         TreeNode<E> current = root;
         list.add(current);
@@ -99,7 +99,7 @@ public class BinaryTree<E> {
         return list; 
     }
       
-    public String encode(String word,HashMap<String,String> mapCodeMorse){
+    public String encode(String word){
         StringBuilder codeMorse= new StringBuilder();
         for (int i = 0; i < word.length(); i++) { 
             codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
@@ -108,8 +108,8 @@ public class BinaryTree<E> {
         return codeMorse.toString();
     }
     
-    public HashMap<String,String> codesMorse() {
-        HashMap<String,String> mapCodeMorse= new HashMap<>();
+    public void codesMorse() {
+        mapCodeMorse= new HashMap<>();
         String cadena;
         try (BufferedReader b = new BufferedReader(new FileReader("alfabeto.txt"))){
             while((cadena = b.readLine())!=null) {
@@ -122,7 +122,6 @@ public class BinaryTree<E> {
         } catch (IOException ex) {
             Logger.getLogger(BinaryTree.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return mapCodeMorse;
     }
 
 }

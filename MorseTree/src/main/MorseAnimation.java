@@ -31,11 +31,12 @@ public class MorseAnimation extends Application {
         hBox.getChildren().addAll(new Label("Ingrese Palabra: "), tfKey, btTraductor, btClear);
         hBox.setAlignment(Pos.CENTER);
         pane.setBottom(hBox);
-
+        tree.codesMorse();
+        tree.crearArbol("&");
         btTraductor.setOnAction(e -> {
             String key = tfKey.getText();
             if (!key.equals("")) {
-                view.mostrarPath(tree.encode(key, tree.codesMorse()));
+                view.mostrarPath(tree.encode(key));
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setHeaderText(null);
@@ -50,7 +51,6 @@ public class MorseAnimation extends Application {
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-        tree.crearArbol("&");
         view.displayTree();
     }
     public static void main(String[] args) {
