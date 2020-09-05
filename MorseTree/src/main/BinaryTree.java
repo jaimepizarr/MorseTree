@@ -103,8 +103,10 @@ public class BinaryTree<E> {
         StringBuilder codeMorse= new StringBuilder();
         for (int i = 0; i < word.length(); i++) { 
             codeMorse.append(mapCodeMorse.get(String.valueOf(word.charAt(i)).toUpperCase()));
+            codeMorse.append(" ");
             codeMorse.append(String.valueOf(word.charAt(i)).toUpperCase());
         }
+        codeMorse.append(" ");
         return codeMorse.toString();
     }
     

@@ -1,13 +1,10 @@
 package main;
 
-
-
 import java.util.LinkedList;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-
 
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
@@ -21,7 +18,7 @@ public class BTView extends Pane {
 
     private BinaryTree<String> tree = new BinaryTree<>();
     private static final double RADIUS = 17;
-    private  static final double VGAP = 50;
+    private static final double VGAP = 50;
     private LinkedList<BinaryTree.TreeNode<String>> path;
 
     BTView(BinaryTree<String> tree) {
@@ -29,15 +26,16 @@ public class BTView extends Pane {
         path = new LinkedList<>();
         setStatus("Tree is empty");
     }
-    
-    public enum radius{
-    RADIUS; 
-   
+
+    public enum radius {
+        RADIUS;
+
     }
-    public enum vGap{
-    VGAP; 
+
+    public enum vGap {
+        VGAP;
     }
-    
+
     public void setStatus(String msg) {
         this.getChildren().add(new Text(20, 20, msg));
     }
@@ -57,7 +55,7 @@ public class BTView extends Pane {
     public void displayTree() {
         this.getChildren().clear();
         if (tree.getRoot() != null) {
-            displayTree(tree.getRoot(), getWidth() / 2, VGAP,getWidth()/4);
+            displayTree(tree.getRoot(), getWidth() / 2, VGAP, getWidth() / 4);
         }
     }
 
@@ -83,7 +81,6 @@ public class BTView extends Pane {
         this.getChildren().addAll(circle,
                 new Text(x - 4, y + 4, root.data));
     }
-    
 
     public void mostrarPath(String code) {
         int size = getChildren().size();
@@ -94,61 +91,93 @@ public class BTView extends Pane {
             double hGap = getWidth() / 4;
             Platform.runLater(new CircleThread(x, y));
             try {
-                Thread.sleep(1000);
+                Thread.sleep(600);
+
+                for (int i = 0; i < code.length(); i++) {
+                    String musicFile = null;
+                    if (code.charAt(i) == '.') {
+                        x += hGap;
+                        y += VGAP;
+                        hGap /= 2;
+                        musicFile = "/resources/Punto.mpeg";
+                    } else if (code.charAt(i) == '-') {
+                        x -= hGap;
+                        y += VGAP;
+                        hGap /= 2;
+                        musicFile = "/resources/Raya.mpeg";
+                    } else {
+                        if (i + 1 < code.length() && code.charAt(i + 1) != ' ') {
+                            Platform.runLater(new TextThread(x, y, code.charAt(i + 1)));
+                            x = getWidth() / 2;
+                            y = VGAP;
+                            hGap = getWidth() / 4;
+                            Thread.sleep(600);
+                        }
+                        Platform.runLater(() -> getChildren().remove(size, getChildren().size()));
+
+                        i++;
+                    }
+                    Platform.runLater(new CircleThread(x, y));
+                    if (musicFile != null) {
+                        playMusic(musicFile);
+                    }
+                    Thread.sleep(600);
+                }
             } catch (InterruptedException ex) {
                 Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
                 Thread.currentThread().interrupt();
             }
-            for (char c : code.toCharArray()) {
-                String musicFile = null;
-                try {
-                    switch (c) {
-                        case '.':
-                            x += hGap;
-                            y += VGAP;
-                            hGap /= 2;
-                            musicFile = "/resources/Punto.mpeg";
-                            break;
-                        case '-':
-                            x -= hGap;
-                            y += VGAP;
-                            hGap /= 2;
-                            musicFile = "/resources/Raya.mpeg";
-                            break;
-                        default:
-                            Platform.runLater(new TextThread(x, y, c));
-                            x = getWidth() / 2;
-                            y = VGAP;
-                            hGap = getWidth() / 4;
-                            Thread.sleep(1000);
-                            Platform.runLater(()->getChildren().remove(size, getChildren().size()));
-                            break;
-                    }
-                    
-                    Platform.runLater(new CircleThread(x, y));
-                    if(musicFile != null) {
-                        playMusic(musicFile);
-                    }
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
-                    Thread.currentThread().interrupt();
-                }
-
-            }
-            Platform.runLater(()->getChildren().remove(size, getChildren().size()));
+//            for (char c : code.toCharArray()) {
+//                String musicFile = null;
+//                try {
+//                    switch (c) {
+//                        case '.':
+//                            x += hGap;
+//                            y += VGAP;
+//                            hGap /= 2;
+//                            musicFile = "/resources/Punto.mpeg";
+//                            break;
+//                        case '-':
+//                            x -= hGap;
+//                            y += VGAP;
+//                            hGap /= 2;
+//                            musicFile = "/resources/Raya.mpeg";
+//                            break;
+//                        default:
+//                            Platform.runLater(new TextThread(x, y, c));
+//                            x = getWidth() / 2;
+//                            y = VGAP;
+//                            hGap = getWidth() / 4;
+//                            Thread.sleep(1000);
+//                            Platform.runLater(()->getChildren().remove(size, getChildren().size()));
+//                            break;
+//                    }
+//                    
+//                    Platform.runLater(new CircleThread(x, y));
+//                    if(musicFile != null) {
+//                        playMusic(musicFile);
+//                    }
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(BTView.class.getName()).log(Level.SEVERE, null, ex);
+//                    Thread.currentThread().interrupt();
+//                }
+//
+//            }
+            Platform.runLater(() -> getChildren().remove(size, getChildren().size()));
         });
 
         thread.start();
 
     }
-    private void playMusic(String musicFile){
-        if(musicFile!=null){
+
+    private void playMusic(String musicFile) {
+        if (musicFile != null) {
             Media sound = new Media(this.getClass().getResource(musicFile).toExternalForm());
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.setAutoPlay(true);
             mediaPlayer.setVolume(1);
-            
+
         }
     }
 
@@ -168,11 +197,8 @@ public class BTView extends Pane {
             circle2.setFill(Color.ORANGE);
             circle2.setStroke(Color.BLACK);
             getChildren().add(circle2);
-            
 
         }
-        
-        
 
     }
 
