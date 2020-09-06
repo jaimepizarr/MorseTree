@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Threads;
+package threadss;
 
 import javafx.scene.text.Text;
 import main.BTView;

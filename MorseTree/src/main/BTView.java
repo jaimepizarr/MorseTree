@@ -1,15 +1,8 @@
 package main;
 
-import Threads.PathThread;
+import threadss.PathThread;
 import java.util.LinkedList;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
-
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
